@@ -1,0 +1,11 @@
+name: Spigotutorial
+version: @version@
+main: com.github.nashi2603.spigotutorial.Spigotutorial
+api-version: 1.13
+authors: [nashi2603]
+description: Plugin tutorial.
+
+commands:
+  pltest:
+    description: Test command.
+    usage: /<command>
