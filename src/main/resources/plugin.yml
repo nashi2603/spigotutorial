@@ -9,3 +9,19 @@ commands:
   pltest:
     description: Test command.
     usage: /<command>
+
+  whisp:
+    description: whisper chat.
+    usage: /<command> <username> <text>
+
+  cwhisp:
+    description: commandblock whisper chat.
+    usage: /<command>
+
+  invctrlr:
+    description: inventory controler.
+    usage: /<command> <username>
+
+  nbtpull:
+    description: Pull item NBT Data.
+    usage: /<command>
