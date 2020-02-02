@@ -1,5 +1,8 @@
 package com.github.nashi2603.spigotutorial;
 
+import com.google.common.base.Splitter;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -11,9 +14,13 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.lang.reflect.Type;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Spliterator;
 
 public class NbtPull implements CommandExecutor {
     private final Spigotutorial plugin;
@@ -31,11 +38,16 @@ public class NbtPull implements CommandExecutor {
                 ConnSqlite connection = new ConnSqlite();
                 Connection conn = connection.connectsqlite();
                 try {
-                    PreparedStatement psst = conn.prepareStatement("select * from testtable1 where id = 1;");
+                    PreparedStatement psst = conn.prepareStatement("select * from testtable1 where id = ?;");
+                    psst.setInt(1, Integer.valueOf(args[0]));
                     ResultSet rs = psst.executeQuery();
-                    Object pullitem = rs.getObject("itemdata");
+//                    Map<String, Object> pullitem = new HashMap<>();
+                    Gson gson = new Gson();
+                    Type listtype = new TypeToken<HashMap<String, Object>>() {} .getType();
+                    Map<String, Object> pullitem = gson.fromJson(rs.getString("itemdata"), listtype);
                     ((Player)sender).sendMessage(String.valueOf(pullitem));
-                    ((Player)sender).getInventory().addItem(((ItemStack)pullitem));
+                    ItemStack item = ItemStack.deserialize(pullitem);
+                    ((Player)sender).getInventory().addItem(item);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

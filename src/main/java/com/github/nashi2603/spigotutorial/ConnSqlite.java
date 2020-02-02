@@ -9,8 +9,8 @@ public class ConnSqlite {
         Statement stmt = null;
         try {
             conn = DriverManager.getConnection("jdbc:sqlite:plugins/Spigotutorial/" + dbname);
-//            stmt = conn.createStatement();
-//            stmt.executeUpdate("CREATE TABLE IF NOT EXISTS testtable1(id int NOT NULL PRIMARY KEY, itemdata blob)");
+            stmt = conn.createStatement();
+            stmt.executeUpdate("CREATE TABLE IF NOT EXISTS testtable1(id INTEGER PRIMARY KEY AUTOINCREMENT, itemdata STRING)");
         } catch (Exception e) {
             e.printStackTrace();
         }
